@@ -47,7 +47,8 @@ imageMarkdown(){
 
 markdownMarkdown(){
   file=$1 
-  cat ".$file" "  "
+  cat ".$file" 
+  echo "  "
 }
 ```  
 **/lib/generate-markdown.sh**  
@@ -195,6 +196,7 @@ walkfiles(){
 * oh nothing
 * just tesing out stuff
 [this links back to here](/)
+  
 **/lul/wat/grr/ok**  
 ``` txt  
 ```  
@@ -309,7 +311,8 @@ imageMarkdown(){
 
 markdownMarkdown(){
   file=$1 
-  cat ".$file" "  "
+  cat ".$file" 
+  echo "  "
 }
 
 renderMarkdownForFile(){
