@@ -18,7 +18,7 @@ codeBlockMarkdown(){
 
 imageMarkdown(){
   file=$1
-  echo "[](.$file)"
+  echo "![]($file)"
 }
 
 markdownMarkdown(){

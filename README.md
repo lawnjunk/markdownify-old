@@ -42,7 +42,7 @@ codeBlockMarkdown(){
 
 imageMarkdown(){
   file=$1
-  echo "[](.$file)"
+  echo "![]($file)"
 }
 
 markdownMarkdown(){
@@ -166,7 +166,7 @@ walkfiles(){
 **/lul/wat/hello**  
 **/lul/wort**  
 **/lulwat.png**  
-[](./lulwat.png)
+![](/lulwat.png)
 **/main.sh**  
 ``` sh  
 walkfiles $PWD
