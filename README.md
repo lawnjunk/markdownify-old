@@ -1,7 +1,27 @@
 **/gulpfile.js**  
+``` js  
+'use strict';
+
+const gulp = require('gulp');
+const run = require('gulp-run');
+
+const paths = ['lib/**/*.sh', 'main.sh'];
+
+gulp.task('render', function(){
+  console.log('first');
+  run('./render.sh').exec()
+});
+
+gulp.task('watch', function(){
+  gulp.watch(paths, ['build']);
+});
+
+gulp.task('build', ['render']);
+gulp.task('default', ['build']);
+```  
 ##/lib  
 **/lib/file-to-markdown.sh**  
-``` bash  
+``` sh  
 dirNameMarkdown(){ 
   file=$1
   echo "##$file  " 
@@ -31,7 +51,7 @@ markdownMarkdown(){
 }
 ```  
 **/lib/get-file-extension.sh**  
-``` bash  
+``` sh  
 getFileExtension(){
   file="$1"
   fileBaseName=$(basename $file)
@@ -40,7 +60,7 @@ getFileExtension(){
 }
 ```  
 **/lib/get-relitive-path.sh**  
-``` bash  
+``` sh  
 getRelitivePath(){
   absolutePath="$1"
   pwdLength="${#PWD}"
@@ -48,7 +68,7 @@ getRelitivePath(){
 }
 ```  
 **/lib/ignore-dir.sh**  
-``` bash  
+``` sh  
 ignoreDir(){
   file="$1"
   fileMatchesIgnoreCase="no"
@@ -67,7 +87,7 @@ ignoreDir(){
 }
 ```  
 **/lib/ignore-file.sh**  
-``` bash  
+``` sh  
 ignoreFile(){
   file="$1"
   fileMatchesIgnoreCase="no"
@@ -83,7 +103,7 @@ ignoreFile(){
 }
 ```  
 **/lib/render-markdown.sh**  
-``` bash  
+``` sh  
 for file in $(walkfiles $PWD); do
   fileExtnesion=$(getFileExtension $file)
   relitiveFilePath=$(getRelitivePath $file)
@@ -96,7 +116,19 @@ for file in $(walkfiles $PWD); do
         markdownMarkdown "$relitiveFilePath";;
       *"sh"*)
         fileNameMarkdown "$relitiveFilePath"
-        codeBlockMarkdown "$relitiveFilePath" "bash";;
+        codeBlockMarkdown "$relitiveFilePath" "$fileExtnesion";;
+      *"js"*)
+        fileNameMarkdown "$relitiveFilePath"
+        codeBlockMarkdown "$relitiveFilePath" "$fileExtnesion";;
+      *"py"*)
+        fileNameMarkdown "$relitiveFilePath"
+        codeBlockMarkdown "$relitiveFilePath" "$fileExtnesion";;
+      *"html"*)
+        fileNameMarkdown "$relitiveFilePath"
+        codeBlockMarkdown "$relitiveFilePath" "$fileExtnesion";;
+      *"png"*)
+        fileNameMarkdown "$relitiveFilePath"
+        imageMarkdown "$relitiveFilePath";;
       *)
         fileNameMarkdown "$relitiveFilePath"
 
@@ -105,7 +137,7 @@ for file in $(walkfiles $PWD); do
 done
 ```  
 **/lib/walkfiles.sh**  
-``` bash  
+``` sh  
 # recursivly print all paths of files not in .ignore
 walkfiles(){
   for file in $(ls -Rd $1/*);do
@@ -133,15 +165,45 @@ walkfiles(){
 **/lul/wat/grr/yess**  
 **/lul/wat/hello**  
 **/lul/wort**  
+**/lulwat.png**  
+[](./lulwat.png)
 **/main.sh**  
-``` bash  
+``` sh  
 walkfiles $PWD
 ```  
 **/makefile**  
 **/markdownify**  
 **/package.json**  
+``` json  
+{
+  "name": "markdownify",
+  "version": "1.0.0",
+  "description": "pisssss off tyler",
+  "main": "none",
+  "scripts": {
+    "test": "make"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/slugbyte/markdownify.git"
+  },
+  "keywords": [
+    "'lulz'"
+  ],
+  "author": "slugbyte",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/slugbyte/markdownify/issues"
+  },
+  "homepage": "https://github.com/slugbyte/markdownify#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-run": "^1.6.12"
+  }
+}
+```  
 **/render.sh**  
-``` bash  
+``` sh  
 #!/bin/bash 
 include(){
   cat $1 >> markdownify

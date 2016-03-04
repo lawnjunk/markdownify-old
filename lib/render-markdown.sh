@@ -10,7 +10,19 @@ for file in $(walkfiles $PWD); do
         markdownMarkdown "$relitiveFilePath";;
       *"sh"*)
         fileNameMarkdown "$relitiveFilePath"
-        codeBlockMarkdown "$relitiveFilePath" "bash";;
+        codeBlockMarkdown "$relitiveFilePath" "$fileExtnesion";;
+      *"js"*)
+        fileNameMarkdown "$relitiveFilePath"
+        codeBlockMarkdown "$relitiveFilePath" "$fileExtnesion";;
+      *"py"*)
+        fileNameMarkdown "$relitiveFilePath"
+        codeBlockMarkdown "$relitiveFilePath" "$fileExtnesion";;
+      *"html"*)
+        fileNameMarkdown "$relitiveFilePath"
+        codeBlockMarkdown "$relitiveFilePath" "$fileExtnesion";;
+      *"png"*)
+        fileNameMarkdown "$relitiveFilePath"
+        imageMarkdown "$relitiveFilePath";;
       *)
         fileNameMarkdown "$relitiveFilePath"
 
