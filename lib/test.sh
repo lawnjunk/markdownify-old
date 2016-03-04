@@ -1,0 +1,3 @@
+lulwat(){
+  echo $1
+}
