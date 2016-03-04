@@ -1,10 +1,8 @@
 renderMarkdownForFile(){
   relitiveFilePath="$1"
   fileExtnesion="$2"
-  echo "wat"
   case $fileExtnesion in
     *"md"*)
-      fileNameMarkdown "$relitiveFilePath"
       markdownMarkdown "$relitiveFilePath";;
     *"sh"*)
       fileNameMarkdown "$relitiveFilePath"
