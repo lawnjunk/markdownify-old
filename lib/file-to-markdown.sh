@@ -1,9 +1,14 @@
-dirMarkdown(){ 
+dirNameMarkdown(){ 
   file=$1
-  echo "**$file**  " 
+  echo "##$file  " 
 }
 
-codeFileMarkdown(){
+fileNameMarkdown(){
+  file=$1
+  echo "**$file**  "
+}
+
+codeBlockMarkdown(){
   file=$1
   fileExtension=$2
   echo "\`\`\` $fileExtension  "
