@@ -11,6 +11,7 @@ setup(){
 }
 
 setup
+include "./lib/normalize-path.sh"
 include "./lib/get-relitive-path.sh"
 include "./lib/get-file-extension.sh"
 include "./lib/ignore-dir.sh"
