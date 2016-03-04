@@ -6,8 +6,10 @@ for file in $(walkfiles $PWD); do
   else 
     case $fileExtnesion in
       *"md"*)
+        fileNameMarkdown "$relitiveFilePath"
         markdownMarkdown "$relitiveFilePath";;
       *"sh"*)
+        fileNameMarkdown "$relitiveFilePath"
         codeBlockMarkdown "$relitiveFilePath" "bash";;
       *)
         fileNameMarkdown "$relitiveFilePath"
