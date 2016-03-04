@@ -63,21 +63,32 @@ ignoreFile(){
   [ $fileMatchesIgnoreCase = "no" ] && echo $file 
 }
 
+ignoreInput(){
+  file="$1"
+  echo "batman file           $file"
+  echo "outputFilePath $outputFilePath"
+  fileMatchesIgnoreCase="no"
+  if [ "$file" = "$outputFilePath" ];then
+    fileMatchesIgnoreCase="yes" 
+  fi
+  echo $fileMatchesIgnoreCase
+}
+
 # recursivly print all paths of files not in .ignore
 walkfiles(){
   for file in $(ls -Rd $1/*);do
     if [ -d "$file" ]; then
-      if [ -f "$PWD/.ignore" ]; then 
+      #if [ -f "$PWD/.ignore" ]; then 
         ignoreDir $file
-      else
-        walkfiles $file
-      fi
+      #else
+        #walkfiles $file
+      #fi
     else 
-      if [ -f "$PWD/.ignore" ]; then 
+      #if [ -f "$PWD/.ignore" ]; then 
         ignoreFile $file
-      else
-        echo $file
-      fi
+      #else
+        #[ $(ignoreInput) = "no" ] && echo $file
+      #fi
     fi
   done
 }
