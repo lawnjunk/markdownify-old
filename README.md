@@ -1,4 +1,3 @@
-wat
 **/gulpfile.js**  
 ``` js  
 'use strict';
@@ -21,7 +20,6 @@ gulp.task('build', ['render']);
 gulp.task('default', ['build']);
 ```  
 ##/lib  
-wat
 **/lib/file-to-markdown.sh**  
 ``` sh  
 dirNameMarkdown(){ 
@@ -52,7 +50,6 @@ markdownMarkdown(){
   cat ".$file"
 }
 ```  
-wat
 **/lib/generate-markdown.sh**  
 ``` sh  
 generateMarkdown(){
@@ -67,7 +64,6 @@ generateMarkdown(){
   done
 }
 ```  
-wat
 **/lib/get-file-extension.sh**  
 ``` sh  
 getFileExtension(){
@@ -77,7 +73,6 @@ getFileExtension(){
   echo "$fileExtension" 
 }
 ```  
-wat
 **/lib/get-relitive-path.sh**  
 ``` sh  
 getRelitivePath(){
@@ -86,7 +81,6 @@ getRelitivePath(){
   echo "${absolutePath:$pwdLength}"
 }
 ```  
-wat
 **/lib/ignore-dir.sh**  
 ``` sh  
 ignoreDir(){
@@ -106,7 +100,6 @@ ignoreDir(){
   fi
 }
 ```  
-wat
 **/lib/ignore-file.sh**  
 ``` sh  
 ignoreFile(){
@@ -123,16 +116,13 @@ ignoreFile(){
   [ $fileMatchesIgnoreCase = "no" ] && echo $file 
 }
 ```  
-wat
 **/lib/render-markdown-for-file.sh**  
 ``` sh  
 renderMarkdownForFile(){
   relitiveFilePath="$1"
   fileExtnesion="$2"
-  echo "wat"
   case $fileExtnesion in
     *"md"*)
-      fileNameMarkdown "$relitiveFilePath"
       markdownMarkdown "$relitiveFilePath";;
     *"sh"*)
       fileNameMarkdown "$relitiveFilePath"
@@ -179,7 +169,6 @@ renderMarkdownForFile(){
     esac
 }
 ```  
-wat
 **/lib/walkfiles.sh**  
 ``` sh  
 # recursivly print all paths of files not in .ignore
@@ -202,37 +191,25 @@ walkfiles(){
 }
 ```  
 ##/lul  
-wat
 **/lul/fog**  
 ##/lul/wat  
 ##/lul/wat/grr  
-wat
-**/lul/wat/grr/about.md**  
 # wat is up
 * oh nothing
 * just tesing out stuff
 [this links back to here](/)
-wat
 **/lul/wat/grr/ok**  
-wat
 **/lul/wat/grr/yess**  
-wat
 **/lul/wat/hello**  
-wat
 **/lul/wort**  
-wat
 **/lulwat.png**  
 ![](/lulwat.png)  
-wat
 **/main.sh**  
 ``` sh  
 generateMarkdown
 ```  
-wat
 **/makefile**  
-wat
 **/markdownify**  
-wat
 **/package.json**  
 ``` json  
 {
@@ -262,7 +239,6 @@ wat
   }
 }
 ```  
-wat
 **/render.sh**  
 ``` sh  
 #!/bin/bash 
@@ -288,5 +264,4 @@ include "./lib/render-markdown-for-file.sh"
 include "./lib/generate-markdown.sh"
 include "./main.sh"
 ```  
-wat
 **/wat**  
