@@ -19,173 +19,6 @@ gulp.task('watch', function(){
 gulp.task('build', ['render']);
 gulp.task('default', ['build']);
 ```  
-##/lib  
-**/lib/file-to-markdown.sh**  
-``` sh  
-dirNameMarkdown(){ 
-  file=$1
-  echo "##$file  " 
-}
-
-fileNameMarkdown(){
-  file=$1
-  echo "**$file**  "
-}
-
-codeBlockMarkdown(){
-  file=$1
-  fileExtension=$2
-  echo "\`\`\` $fileExtension  "
-  cat ".$file"
-  echo "\`\`\`  "
-}
-
-imageMarkdown(){
-  file=$1
-  echo "![]($file)  "
-}
-
-markdownMarkdown(){
-  file=$1 
-  cat ".$file" 
-  echo "  "
-}
-```  
-**/lib/generate-markdown.sh**  
-``` sh  
-generateMarkdown(){
-  for file in $(walkfiles $PWD); do
-    fileExtnesion=$(getFileExtension $file)
-    relitiveFilePath=$(getRelitivePath $file)
-    if [ -d $file ];then 
-      dirNameMarkdown "$relitiveFilePath"
-    else 
-      renderMarkdownForFile "$relitiveFilePath" "$fileExtnesion"
-    fi
-  done
-}
-```  
-**/lib/get-file-extension.sh**  
-``` sh  
-getFileExtension(){
-  file="$1"
-  fileBaseName=$(basename $file)
-  fileExtension=$(echo $fileBaseName |cut -d '.' -f 2)
-  echo "$fileExtension" 
-}
-```  
-**/lib/get-relitive-path.sh**  
-``` sh  
-getRelitivePath(){
-  absolutePath="$1"
-  pwdLength="${#PWD}"
-  echo "${absolutePath:$pwdLength}"
-}
-```  
-**/lib/ignore-dir.sh**  
-``` sh  
-ignoreDir(){
-  file="$1"
-  fileMatchesIgnoreCase="no"
-
-  for ignore in $(cat .ignore);do
-    if [ $(basename "$file") = "$ignore" ];then  
-      fileMatchesIgnoreCase='yes'
-      continue
-    fi
-  done
-
-  if [ $fileMatchesIgnoreCase = "no" ];then
-    echo $file
-    walkfiles $file
-  fi
-}
-```  
-**/lib/ignore-file.sh**  
-``` sh  
-ignoreFile(){
-  file="$1"
-  fileMatchesIgnoreCase="no"
-
-  for ignore in $(cat "$PWD/.ignore");do
-    if [ $(basename "$file") = "$ignore" ];then  
-      fileMatchesIgnoreCase="yes"
-      continue
-    fi
-  done
-
-  [ $fileMatchesIgnoreCase = "no" ] && echo $file 
-}
-```  
-**/lib/render-markdown-for-file.sh**  
-``` sh  
-renderMarkdownForFile(){
-  relitiveFilePath="$1"
-  fileExtnesion="$2"
-  case $fileExtnesion in
-    *"md"*)
-      markdownMarkdown "$relitiveFilePath";;
-    *"sh"*)
-      fileNameMarkdown "$relitiveFilePath"
-      codeBlockMarkdown "$relitiveFilePath" "$fileExtnesion";;
-    *"js"*)
-      fileNameMarkdown "$relitiveFilePath"
-      codeBlockMarkdown "$relitiveFilePath" "$fileExtnesion";;
-    *"py"*)
-      fileNameMarkdown "$relitiveFilePath"
-      codeBlockMarkdown "$relitiveFilePath" "$fileExtnesion";;
-    *"html"*)
-      fileNameMarkdown "$relitiveFilePath"
-      codeBlockMarkdown "$relitiveFilePath" "$fileExtnesion";;
-    *"css"*)
-      fileNameMarkdown "$relitiveFilePath"
-      codeBlockMarkdown "$relitiveFilePath" "$fileExtnesion";;
-    *"jsx"*)
-      fileNameMarkdown "$relitiveFilePath"
-      codeBlockMarkdown "$relitiveFilePath" "$fileExtnesion";;
-    *"scss"*)
-      fileNameMarkdown "$relitiveFilePath"
-      codeBlockMarkdown "$relitiveFilePath" "$fileExtnesion";;
-    *"sass"*)
-      fileNameMarkdown "$relitiveFilePath"
-      codeBlockMarkdown "$relitiveFilePath" "$fileExtnesion";;
-    *"png"*)
-      imageMarkdown "$relitiveFilePath";;
-    *"jpg"*)
-      imageMarkdown "$relitiveFilePath";;
-    *"gif"*)
-      imageMarkdown "$relitiveFilePath";;
-    *"tif"*)
-      imageMarkdown "$relitiveFilePath";;
-    *"bmp"*)
-      imageMarkdown "$relitiveFilePath";;
-    *)
-      fileNameMarkdown "$relitiveFilePath"
-      codeBlockMarkdown "$relitiveFilePath" "txt";;
-    esac
-}
-```  
-**/lib/walkfiles.sh**  
-``` sh  
-# recursivly print all paths of files not in .ignore
-walkfiles(){
-  for file in $(ls -Rd $1/*);do
-    if [ -d "$file" ]; then
-      if [ -f "$PWD/.ignore" ]; then 
-        ignoreDir $file
-      else
-        walkfiles $file
-      fi
-    else 
-      if [ -f "$PWD/.ignore" ]; then 
-        ignoreFile $file
-      else
-        echo $file
-      fi
-    fi
-  done
-}
-```  
 ##/lul  
 **/lul/fog**  
 ``` txt  
@@ -213,6 +46,8 @@ walkfiles(){
 **/main.sh**  
 ``` sh  
 generateMarkdown
+
+# haha lulwta
 ```  
 **/makefile**  
 ``` txt  
@@ -374,6 +209,8 @@ generateMarkdown(){
 }
 
 generateMarkdown
+
+# haha lulwta
 
 ```  
 **/package.json**  
