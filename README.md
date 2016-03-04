@@ -1,5 +1,6 @@
 **/gulpfile.js**  
 ##/lib  
+**/lib/file-to-markdown.sh**  
 ``` bash  
 dirNameMarkdown(){ 
   file=$1
@@ -29,6 +30,7 @@ markdownMarkdown(){
   cat .$file
 }
 ```  
+**/lib/get-file-extension.sh**  
 ``` bash  
 getFileExtension(){
   file="$1"
@@ -37,6 +39,7 @@ getFileExtension(){
   echo "$fileExtension" 
 }
 ```  
+**/lib/get-relitive-path.sh**  
 ``` bash  
 getRelitivePath(){
   absolutePath="$1"
@@ -44,6 +47,7 @@ getRelitivePath(){
   echo "${absolutePath:$pwdLength}"
 }
 ```  
+**/lib/ignore-dir.sh**  
 ``` bash  
 ignoreDir(){
   file="$1"
@@ -62,6 +66,7 @@ ignoreDir(){
   fi
 }
 ```  
+**/lib/ignore-file.sh**  
 ``` bash  
 ignoreFile(){
   file="$1"
@@ -77,6 +82,7 @@ ignoreFile(){
   [ $fileMatchesIgnoreCase = "no" ] && echo $file 
 }
 ```  
+**/lib/render-markdown.sh**  
 ``` bash  
 for file in $(walkfiles $PWD); do
   fileExtnesion=$(getFileExtension $file)
@@ -86,8 +92,10 @@ for file in $(walkfiles $PWD); do
   else 
     case $fileExtnesion in
       *"md"*)
+        fileNameMarkdown "$relitiveFilePath"
         markdownMarkdown "$relitiveFilePath";;
       *"sh"*)
+        fileNameMarkdown "$relitiveFilePath"
         codeBlockMarkdown "$relitiveFilePath" "bash";;
       *)
         fileNameMarkdown "$relitiveFilePath"
@@ -96,6 +104,7 @@ for file in $(walkfiles $PWD); do
   fi
 done
 ```  
+**/lib/walkfiles.sh**  
 ``` bash  
 # recursivly print all paths of files not in .ignore
 walkfiles(){
@@ -124,12 +133,14 @@ walkfiles(){
 **/lul/wat/grr/yess**  
 **/lul/wat/hello**  
 **/lul/wort**  
+**/main.sh**  
 ``` bash  
 walkfiles $PWD
 ```  
 **/makefile**  
 **/markdownify**  
 **/package.json**  
+**/render.sh**  
 ``` bash  
 #!/bin/bash 
 include(){
