@@ -3,7 +3,7 @@ ignoreDir(){
   fileMatchesIgnoreCase="no"
 
   for ignore in $(cat .ignore);do
-    if [ $(basename "$file") = "$ignore" ];then  
+    if [ $(basename "$file") = "$ignore" ] || [  $file = $outputFilePath ] ;then  
       fileMatchesIgnoreCase='yes'
       continue
     fi

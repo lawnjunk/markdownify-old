@@ -10,6 +10,14 @@ function normpath(){
   echo $path
 }
 
+if [ $# -eq 0 ];then
+  echo "USAGE ERROR: try markdownify <OUTPUT FILE NAME>"
+  exit 1
+fi
+
+outputFilePath="$PWD/$1"
+outputFilePath=$(normpath $outputFilePath)
+
 getRelitivePath(){
   absolutePath="$1"
   pwdLength="${#PWD}"
@@ -28,7 +36,7 @@ ignoreDir(){
   fileMatchesIgnoreCase="no"
 
   for ignore in $(cat .ignore);do
-    if [ $(basename "$file") = "$ignore" ];then  
+    if [ $(basename "$file") = "$ignore" ] || [  $file = $outputFilePath ] ;then  
       fileMatchesIgnoreCase='yes'
       continue
     fi
@@ -45,7 +53,8 @@ ignoreFile(){
   fileMatchesIgnoreCase="no"
 
   for ignore in $(cat "$PWD/.ignore");do
-    if [ $(basename "$file") = "$ignore" ];then  
+    if [ $(basename "$file") = "$ignore" ] || [ $file = $outputFilePath ] ;then  
+    #if [ $(basename "$file") = "$ignore" ];then  
       fileMatchesIgnoreCase="yes"
       continue
     fi
