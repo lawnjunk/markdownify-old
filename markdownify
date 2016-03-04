@@ -169,5 +169,7 @@ generateMarkdown(){
   done
 }
 
-generateMarkdown > $outputFilePath
+generateMarkdown
+
+# haha lulwta
 
