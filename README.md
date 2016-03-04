@@ -42,12 +42,12 @@ codeBlockMarkdown(){
 
 imageMarkdown(){
   file=$1
-  echo "![]($file)"
+  echo "![]($file)  "
 }
 
 markdownMarkdown(){
   file=$1 
-  cat .$file
+  cat ".$file"
 }
 ```  
 **/lib/get-file-extension.sh**  
@@ -185,12 +185,17 @@ walkfiles(){
 **/lul/fog**  
 ##/lul/wat  
 ##/lul/wat/grr  
+**/lul/wat/grr/about.md**  
+# wat is up
+* oh nothing
+* just tesing out stuff
+[this links back to here](/)
 **/lul/wat/grr/ok**  
 **/lul/wat/grr/yess**  
 **/lul/wat/hello**  
 **/lul/wort**  
 **/lulwat.png**  
-![](/lulwat.png)
+![](/lulwat.png)  
 **/main.sh**  
 ``` sh  
 walkfiles $PWD
