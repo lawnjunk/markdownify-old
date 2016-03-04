@@ -1,6 +1,7 @@
 renderMarkdownForFile(){
   relitiveFilePath="$1"
   fileExtnesion="$2"
+  echo "wat"
   case $fileExtnesion in
     *"md"*)
       fileNameMarkdown "$relitiveFilePath"
@@ -48,16 +49,4 @@ renderMarkdownForFile(){
       fileNameMarkdown "$relitiveFilePath"
 
     esac
-  }
-
-  renderAllMarkdown(){
-    for file in $(walkfiles $PWD); do
-      fileExtnesion=$(getFileExtension $file)
-      relitiveFilePath=$(getRelitivePath $file)
-      if [ -d $file ];then 
-        dirNameMarkdown "$relitiveFilePath"
-      else 
-        renderMarkdownForFile "$relitiveFilePath" "$fileExtnesion"
-      fi
-    done
-  }
+}

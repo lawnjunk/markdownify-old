@@ -1,1 +1,1 @@
-walkfiles $PWD
+generateMarkdown
