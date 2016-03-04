@@ -47,7 +47,7 @@ imageMarkdown(){
 
 markdownMarkdown(){
   file=$1 
-  cat ".$file"
+  cat ".$file" "  "
 }
 ```  
 **/lib/generate-markdown.sh**  
@@ -309,7 +309,7 @@ imageMarkdown(){
 
 markdownMarkdown(){
   file=$1 
-  cat ".$file"
+  cat ".$file" "  "
 }
 
 renderMarkdownForFile(){

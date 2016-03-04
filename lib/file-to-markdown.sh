@@ -23,5 +23,5 @@ imageMarkdown(){
 
 markdownMarkdown(){
   file=$1 
-  cat ".$file"
+  cat ".$file" "  "
 }
