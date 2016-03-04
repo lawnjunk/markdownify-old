@@ -1,6 +1,7 @@
 #!/bin/bash 
 include(){
   cat $1 >> markdownify
+  echo >> markdownify
 }
 
 setup(){
@@ -10,8 +11,10 @@ setup(){
 }
 
 setup
-include "./lib/test.sh"
+include "./lib/get-relitive-path.sh"
+include "./lib/get-file-extension.sh"
+include "./lib/ignore-dir.sh"
+include "./lib/ignore-file.sh"
 include "./lib/walkfiles.sh"
+include "./lib/file-to-markdown.sh"
 include "./main.sh"
-
-cat markdownify

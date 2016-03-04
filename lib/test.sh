@@ -1,3 +1,0 @@
-lulwat(){
-  echo $1
-}

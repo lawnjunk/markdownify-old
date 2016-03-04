@@ -1,19 +1,32 @@
 #!/bin/bash
-lulwat(){
-  echo $1
+getRelitivePath(){
+  absolutePath="$1"
+  pwdLength="${#PWD}"
+  echo "${absolutePath:$pwdLength}"
 }
+
+getFileExtension(){
+  file="$1"
+  fileBaseName=$(basename $file)
+  fileExtension=$(echo $fileBaseName |cut -d '.' -f 2)
+  echo "$fileExtension" 
+}
+
 ignoreDir(){
   file="$1"
   fileMatchesIgnoreCase="no"
 
   for ignore in $(cat .ignore);do
-    if [ ! $(basename "$file") = "$ignore" ];then  
+    if [ $(basename "$file") = "$ignore" ];then  
       fileMatchesIgnoreCase='yes'
       continue
     fi
   done
 
-  [ $fileMatchesIgnoreCase = "no" ] && walkfiles $file 
+  if [ $fileMatchesIgnoreCase = "no" ];then
+    echo $file
+    walkfiles $file
+  fi
 }
 
 ignoreFile(){
@@ -48,6 +61,29 @@ walkfiles(){
     fi
   done
 }
-lulwat "hello world"
+
+dirMarkdown(){ 
+  file=$1
+  echo "**$file**  " 
+}
+
+codeFileMarkdown(){
+  file=$1
+  fileExtension=$2
+  echo "\`\`\` $fileExtension  "
+  cat ".$file"
+  echo "\`\`\`  "
+}
+
+imageMarkdown(){
+  file=$1
+  echo "[](.$file)"
+}
+
+markdownMarkdown(){
+  file=$1 
+  cat .$file
+}
 
 walkfiles $PWD
+
