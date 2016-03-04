@@ -1,3 +1,1 @@
-generateMarkdown
-
-# haha lulwta
+generateMarkdown > $outputFilePath

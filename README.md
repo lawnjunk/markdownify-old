@@ -1,3 +1,31 @@
+**/gulpfile.js**  
+``` js  
+'use strict';
+
+const gulp = require('gulp');
+const run = require('gulp-run');
+
+const paths = ['lib/**/*.sh', 'main.sh'];
+
+gulp.task('render', function(){
+  console.log('first');
+  run('./render.sh').exec()
+});
+
+gulp.task('watch', function(){
+  gulp.watch(paths, ['build']);
+});
+
+gulp.task('build', ['render']);
+gulp.task('default', ['build']);
+```  
+![](/lulwat.png)  
+**/main.sh**  
+``` sh  
+generateMarkdown > $outputFilePath
+```  
+**/markdownify**  
+``` txt  
 #!/bin/bash
 function normpath(){
   # remove all /./ sequences.
@@ -171,3 +199,60 @@ generateMarkdown(){
 
 generateMarkdown > $outputFilePath
 
+```  
+**/package.json**  
+``` json  
+{
+  "name": "markdownify",
+  "version": "1.0.0",
+  "description": "pisssss off tyler",
+  "main": "none",
+  "scripts": {
+    "test": "make"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/slugbyte/markdownify.git"
+  },
+  "keywords": [
+    "'lulz'"
+  ],
+  "author": "slugbyte",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/slugbyte/markdownify/issues"
+  },
+  "homepage": "https://github.com/slugbyte/markdownify#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-run": "^1.6.12"
+  }
+}
+```  
+**/render.sh**  
+``` sh  
+#!/bin/bash 
+include(){
+  cat $1 >> markdownify
+  echo >> markdownify
+}
+
+setup(){
+  rm markdownify
+  echo "#!/bin/bash" > markdownify
+  chmod 755 markdownify
+}
+
+setup
+include "./lib/normalize-path.sh"
+include "./lib/user-input.sh"
+include "./lib/get-relitive-path.sh"
+include "./lib/get-file-extension.sh"
+include "./lib/ignore-dir.sh"
+include "./lib/ignore-file.sh"
+include "./lib/walkfiles.sh"
+include "./lib/file-to-markdown.sh"
+include "./lib/render-markdown-for-file.sh"
+include "./lib/generate-markdown.sh"
+include "./main.sh"
+```  
