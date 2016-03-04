@@ -19,45 +19,33 @@ gulp.task('watch', function(){
 gulp.task('build', ['render']);
 gulp.task('default', ['build']);
 ```  
-##/lul  
-**/lul/fog**  
-``` txt  
-```  
-##/lul/wat  
-##/lul/wat/grr  
-# wat is up
-* oh nothing
-* just tesing out stuff
-[this links back to here](/)
-  
-**/lul/wat/grr/ok**  
-``` txt  
-```  
-**/lul/wat/grr/yess**  
-``` txt  
-```  
-**/lul/wat/hello**  
-``` txt  
-```  
-**/lul/wort**  
-``` txt  
-```  
 ![](/lulwat.png)  
 **/main.sh**  
 ``` sh  
-generateMarkdown
-
-# haha lulwta
-```  
-**/makefile**  
-``` txt  
-all: 
-	gcc build.c  -o markdownify
-	chmod 755 markdownify
+generateMarkdown > $outputFilePath
 ```  
 **/markdownify**  
 ``` txt  
 #!/bin/bash
+function normpath(){
+  # remove all /./ sequences.
+  local path=${1//\/.\//\/}
+
+  # Remove dir/.. sequences.
+  while [[ $path =~ ([^/][^/]*/\.\./) ]]; do
+    path=${path/${BASH_REMATCH[0]}/}
+  done
+  echo $path
+}
+
+if [ $# -eq 0 ];then
+  echo "USAGE ERROR: try markdownify <OUTPUT FILE NAME>"
+  exit 1
+fi
+
+outputFilePath="$PWD/$1"
+outputFilePath=$(normpath $outputFilePath)
+
 getRelitivePath(){
   absolutePath="$1"
   pwdLength="${#PWD}"
@@ -76,7 +64,7 @@ ignoreDir(){
   fileMatchesIgnoreCase="no"
 
   for ignore in $(cat .ignore);do
-    if [ $(basename "$file") = "$ignore" ];then  
+    if [ $(basename "$file") = "$ignore" ] || [  $file = $outputFilePath ] ;then  
       fileMatchesIgnoreCase='yes'
       continue
     fi
@@ -93,7 +81,8 @@ ignoreFile(){
   fileMatchesIgnoreCase="no"
 
   for ignore in $(cat "$PWD/.ignore");do
-    if [ $(basename "$file") = "$ignore" ];then  
+    if [ $(basename "$file") = "$ignore" ] || [ $file = $outputFilePath ] ;then  
+    #if [ $(basename "$file") = "$ignore" ];then  
       fileMatchesIgnoreCase="yes"
       continue
     fi
@@ -208,9 +197,7 @@ generateMarkdown(){
   done
 }
 
-generateMarkdown
-
-# haha lulwta
+generateMarkdown > $outputFilePath
 
 ```  
 **/package.json**  
@@ -257,6 +244,8 @@ setup(){
 }
 
 setup
+include "./lib/normalize-path.sh"
+include "./lib/user-input.sh"
 include "./lib/get-relitive-path.sh"
 include "./lib/get-file-extension.sh"
 include "./lib/ignore-dir.sh"
@@ -266,7 +255,4 @@ include "./lib/file-to-markdown.sh"
 include "./lib/render-markdown-for-file.sh"
 include "./lib/generate-markdown.sh"
 include "./main.sh"
-```  
-**/wat**  
-``` txt  
 ```  

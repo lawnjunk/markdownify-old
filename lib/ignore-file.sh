@@ -3,7 +3,8 @@ ignoreFile(){
   fileMatchesIgnoreCase="no"
 
   for ignore in $(cat "$PWD/.ignore");do
-    if [ $(basename "$file") = "$ignore" ];then  
+    if [ $(basename "$file") = "$ignore" ] || [ $file = $outputFilePath ] ;then  
+    #if [ $(basename "$file") = "$ignore" ];then  
       fileMatchesIgnoreCase="yes"
       continue
     fi
