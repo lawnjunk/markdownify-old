@@ -149,23 +149,18 @@ renderMarkdownForFile(){
       fileNameMarkdown "$relitiveFilePath"
       codeBlockMarkdown "$relitiveFilePath" "$fileExtnesion";;
     *"png"*)
-      fileNameMarkdown "$relitiveFilePath"
       imageMarkdown "$relitiveFilePath";;
     *"jpg"*)
-      fileNameMarkdown "$relitiveFilePath"
       imageMarkdown "$relitiveFilePath";;
     *"gif"*)
-      fileNameMarkdown "$relitiveFilePath"
       imageMarkdown "$relitiveFilePath";;
     *"tif"*)
-      fileNameMarkdown "$relitiveFilePath"
       imageMarkdown "$relitiveFilePath";;
     *"bmp"*)
-      fileNameMarkdown "$relitiveFilePath"
       imageMarkdown "$relitiveFilePath";;
     *)
       fileNameMarkdown "$relitiveFilePath"
-
+      codeBlockMarkdown "$relitiveFilePath" "txt";;
     esac
 }
 ```  
@@ -192,6 +187,8 @@ walkfiles(){
 ```  
 ##/lul  
 **/lul/fog**  
+``` txt  
+```  
 ##/lul/wat  
 ##/lul/wat/grr  
 # wat is up
@@ -199,17 +196,183 @@ walkfiles(){
 * just tesing out stuff
 [this links back to here](/)
 **/lul/wat/grr/ok**  
+``` txt  
+```  
 **/lul/wat/grr/yess**  
+``` txt  
+```  
 **/lul/wat/hello**  
+``` txt  
+```  
 **/lul/wort**  
-**/lulwat.png**  
+``` txt  
+```  
 ![](/lulwat.png)  
 **/main.sh**  
 ``` sh  
 generateMarkdown
 ```  
 **/makefile**  
+``` txt  
+all: 
+	gcc build.c  -o markdownify
+	chmod 755 markdownify
+```  
 **/markdownify**  
+``` txt  
+#!/bin/bash
+getRelitivePath(){
+  absolutePath="$1"
+  pwdLength="${#PWD}"
+  echo "${absolutePath:$pwdLength}"
+}
+
+getFileExtension(){
+  file="$1"
+  fileBaseName=$(basename $file)
+  fileExtension=$(echo $fileBaseName |cut -d '.' -f 2)
+  echo "$fileExtension" 
+}
+
+ignoreDir(){
+  file="$1"
+  fileMatchesIgnoreCase="no"
+
+  for ignore in $(cat .ignore);do
+    if [ $(basename "$file") = "$ignore" ];then  
+      fileMatchesIgnoreCase='yes'
+      continue
+    fi
+  done
+
+  if [ $fileMatchesIgnoreCase = "no" ];then
+    echo $file
+    walkfiles $file
+  fi
+}
+
+ignoreFile(){
+  file="$1"
+  fileMatchesIgnoreCase="no"
+
+  for ignore in $(cat "$PWD/.ignore");do
+    if [ $(basename "$file") = "$ignore" ];then  
+      fileMatchesIgnoreCase="yes"
+      continue
+    fi
+  done
+
+  [ $fileMatchesIgnoreCase = "no" ] && echo $file 
+}
+
+# recursivly print all paths of files not in .ignore
+walkfiles(){
+  for file in $(ls -Rd $1/*);do
+    if [ -d "$file" ]; then
+      if [ -f "$PWD/.ignore" ]; then 
+        ignoreDir $file
+      else
+        walkfiles $file
+      fi
+    else 
+      if [ -f "$PWD/.ignore" ]; then 
+        ignoreFile $file
+      else
+        echo $file
+      fi
+    fi
+  done
+}
+
+dirNameMarkdown(){ 
+  file=$1
+  echo "##$file  " 
+}
+
+fileNameMarkdown(){
+  file=$1
+  echo "**$file**  "
+}
+
+codeBlockMarkdown(){
+  file=$1
+  fileExtension=$2
+  echo "\`\`\` $fileExtension  "
+  cat ".$file"
+  echo "\`\`\`  "
+}
+
+imageMarkdown(){
+  file=$1
+  echo "![]($file)  "
+}
+
+markdownMarkdown(){
+  file=$1 
+  cat ".$file"
+}
+
+renderMarkdownForFile(){
+  relitiveFilePath="$1"
+  fileExtnesion="$2"
+  case $fileExtnesion in
+    *"md"*)
+      markdownMarkdown "$relitiveFilePath";;
+    *"sh"*)
+      fileNameMarkdown "$relitiveFilePath"
+      codeBlockMarkdown "$relitiveFilePath" "$fileExtnesion";;
+    *"js"*)
+      fileNameMarkdown "$relitiveFilePath"
+      codeBlockMarkdown "$relitiveFilePath" "$fileExtnesion";;
+    *"py"*)
+      fileNameMarkdown "$relitiveFilePath"
+      codeBlockMarkdown "$relitiveFilePath" "$fileExtnesion";;
+    *"html"*)
+      fileNameMarkdown "$relitiveFilePath"
+      codeBlockMarkdown "$relitiveFilePath" "$fileExtnesion";;
+    *"css"*)
+      fileNameMarkdown "$relitiveFilePath"
+      codeBlockMarkdown "$relitiveFilePath" "$fileExtnesion";;
+    *"jsx"*)
+      fileNameMarkdown "$relitiveFilePath"
+      codeBlockMarkdown "$relitiveFilePath" "$fileExtnesion";;
+    *"scss"*)
+      fileNameMarkdown "$relitiveFilePath"
+      codeBlockMarkdown "$relitiveFilePath" "$fileExtnesion";;
+    *"sass"*)
+      fileNameMarkdown "$relitiveFilePath"
+      codeBlockMarkdown "$relitiveFilePath" "$fileExtnesion";;
+    *"png"*)
+      imageMarkdown "$relitiveFilePath";;
+    *"jpg"*)
+      imageMarkdown "$relitiveFilePath";;
+    *"gif"*)
+      imageMarkdown "$relitiveFilePath";;
+    *"tif"*)
+      imageMarkdown "$relitiveFilePath";;
+    *"bmp"*)
+      imageMarkdown "$relitiveFilePath";;
+    *)
+      fileNameMarkdown "$relitiveFilePath"
+      codeBlockMarkdown "$relitiveFilePath" "txt";;
+    esac
+}
+
+generateMarkdown(){
+  for file in $(walkfiles $PWD); do
+    fileExtnesion=$(getFileExtension $file)
+    relitiveFilePath=$(getRelitivePath $file)
+    if [ -d $file ];then 
+      dirNameMarkdown "$relitiveFilePath"
+    else 
+      renderMarkdownForFile "$relitiveFilePath" "$fileExtnesion"
+    fi
+  done
+}
+
+generateMarkdown
+
+```  
 **/package.json**  
 ``` json  
 {
@@ -265,3 +428,5 @@ include "./lib/generate-markdown.sh"
 include "./main.sh"
 ```  
 **/wat**  
+``` txt  
+```  

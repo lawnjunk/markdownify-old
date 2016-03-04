@@ -29,22 +29,17 @@ renderMarkdownForFile(){
       fileNameMarkdown "$relitiveFilePath"
       codeBlockMarkdown "$relitiveFilePath" "$fileExtnesion";;
     *"png"*)
-      fileNameMarkdown "$relitiveFilePath"
       imageMarkdown "$relitiveFilePath";;
     *"jpg"*)
-      fileNameMarkdown "$relitiveFilePath"
       imageMarkdown "$relitiveFilePath";;
     *"gif"*)
-      fileNameMarkdown "$relitiveFilePath"
       imageMarkdown "$relitiveFilePath";;
     *"tif"*)
-      fileNameMarkdown "$relitiveFilePath"
       imageMarkdown "$relitiveFilePath";;
     *"bmp"*)
-      fileNameMarkdown "$relitiveFilePath"
       imageMarkdown "$relitiveFilePath";;
     *)
       fileNameMarkdown "$relitiveFilePath"
-
+      codeBlockMarkdown "$relitiveFilePath" "txt";;
     esac
 }
